@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0 maximum-scale=1.0,minimum-scale=1,user-scalable=no">
+    <title>the-part</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+  <script>
+    function resizewindow() {
+      var deviceWidth = document.documentElement.clientWidth;
+      var rootRem = deviceWidth/7.5 + 'px';
+      document.documentElement.style.fontSize = rootRem
+      console.log(deviceWidth);
+    }
+    
+  resizewindow()
+  </script>
+</html>

@@ -27,26 +27,26 @@
         <!-- menulist start -->
         <div class="menulist">
             <div class="row">
-                <router-link to="/">
+                <router-link to="/newseye">
                     <img src="../../../public/img/icon_01.png">
                     <p class="row-text">信工新闻眼</p>
                 </router-link>
 
-                <router-link to="/">
+                <router-link to="/life">
                     <img src="../../../public/img/icon_03.png">
                     <p class="row-text">掌上组织生活</p>
                 </router-link>
-                <router-link to="/">
+                <router-link to="/login">
                     <img src="../../../public/img/icon_05.png">
                     <p class="row-text">党员云互动</p>
                 </router-link>
             </div>
             <div class="row">
-                <router-link to="/">
+                <router-link to="/oneclick">
                     <img src="../../../public/img/icon_04.png">
                     <p class="row-text">党建一点通</p>
                 </router-link>
-                <router-link to="/">
+                <router-link to="/showidentity">
                     <img src="../../../public/img/icon_06.png">
                     <p class="row-text">党员亮身份</p>
                 </router-link>
@@ -64,11 +64,11 @@
         <!-- banner end -->
         <!-- cell-banner start -->
         <div class="cell-banner">
-            <div class="banner-l">fhdh</div>
+            <div class="banner-l"></div>
             <div class="banner-r">
                 <div class="banner-r-item">
-                   <router-link to="/"></router-link>
-                   <router-link to="/"></router-link>
+                   <router-link to="/anytimestudy"></router-link>
+                   <router-link to="/AutoPhoto"></router-link>
                 </div>
                 <div class="banner-r-item">
                     <router-link to="/"></router-link>
@@ -87,7 +87,7 @@
 
 <script>
 import { Swipe, SwipeItem } from "mint-ui";
-import Tabbar from '@/components/tabbar'
+import Tabbar from '@/components/Tabbar'
 export default {
   components:{
     Tabbar

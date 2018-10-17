@@ -26,7 +26,7 @@ export default {
 <style scoped lang = "scss">
 .login-wrapper {
   background-color: #c50206;
-  height: 100%;
+  min-height: 500px;
   .logo {
     width: 4.06rem;
     height: 48.86px;

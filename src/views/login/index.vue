@@ -7,26 +7,51 @@
             <img src="../../../public/img/logo.png" alt="">
         </div>
         <div class="login-box">
-            <input type="text" name="username" placeholder="身份证号">
-            <input type="password" name="password" placeholder="密码">
-            <input type="button" value="登录">
+            <input type="text" name="username" placeholder="身份证号" v-model="username">
+            <input type="password" name="password" placeholder="密码" v-model="password">
+            <input type="button" value="登录" @click="login">
         </div>
     </div>
 </template>
 
 <script>
-import Header from '@/components/Header'
+import Header from "@/components/Header";
 export default {
-    components:{
-        Header
+  data() {
+    return {
+      username: "1001",
+      password: "123456"
+    };
+  },
+  components: {
+    Header
+  },
+  methods: {
+    login() {
+      this.$axios
+        .post("/hhdj/user/userLogin.do", {
+          id_card: this.username,
+          password: this.password
+        })
+        .then(res => {
+          if (res.code == 1) {
+            //   localStorage.setItem = res.token
+            this.$store.commit("CHANGE_USER", res.data);
+            this.$store.commit("CHANGE_TOKEN", res.token);
+            setTimeout(() => {
+              this.$router.push("/");
+            }, 1000);
+          }
+        });
     }
+  }
 };
 </script>
 
 <style scoped lang = "scss">
 .login-wrapper {
   background-color: #c50206;
-  min-height: 500px;
+  min-height: 666px;
   .logo {
     width: 4.06rem;
     height: 48.86px;
@@ -37,7 +62,6 @@ export default {
     }
   }
   .login-box {
-      
     input {
       display: block;
       margin: 0 auto;

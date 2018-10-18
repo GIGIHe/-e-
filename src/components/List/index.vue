@@ -1,25 +1,25 @@
 <template>
-    <div>
-        <Header></Header>
-        <ul class=" m-t">
-            <router-link to="/">
-                <li v-for="(item,index) in currentValue" :key="index" class="list-item">
-                    <div class="img-box">
-                        <img :src="item.pic" alt="">
-                    </div>
-                    <div class="content">
-                        <h3 class="content-title">{{item.title}}</h3>
-                        <div class="bottom">
-                            <span class="time">{{item.currentTime}}</span>
-                            <span class="lookup">{{item.count}}</span>
-                        </div>
-                    </div>
-                </li>
-            </router-link>
-            <mt-spinner type="fading-circle" class="spiner" v-if="isShow"></mt-spinner>
-            <p v-else>没有更多数据</p>
-        </ul>
-    </div>
+  <div>
+    <Header></Header>
+    <ul class=" m-t">
+        <li v-for="(item,index) in listData" :key="index" class="list-item">
+           <router-link :to="{name:'newsDetail',params:{id:item.newsId}}">
+          <div class="img-box">
+            <img :src="item.pic" alt="">
+          </div>
+          <div class="content">
+            <h3 class="content-title">{{item.title}}</h3>
+            <div class="bottom">
+              <span class="time">{{item.currentTime}}</span>
+              <span class="lookup">{{item.count}}</span>
+            </div>
+          </div>
+           </router-link>
+        </li>
+      <mt-spinner type="fading-circle" class="spiner"></mt-spinner>
+      <p v-if="isShow">没有更多数据</p>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -36,25 +36,41 @@ export default {
   },
   data() {
     return {
-      currentValue: [],
+      listData: [],
+      name:'',
       isShow: true
     };
   },
-  methods: {},
+  methods: {
+ getData() {
+   let type = this.$route.meta.type
+      this.$axios
+        .get(`/hhdj/news/newsList.do?page=1&rows=10&type=${type}`)
+        .then(res => {
+          if (res.code == 1) {
+            this.listData = res.rows;
+          }
+        });
+    }
+  },
   watch: {
     data(val) {
       return (this.currentValue = val);
     }
   },
   created() {
-    console.log("current:", this.data);
+    console.log("current:", this.currentValue);
+    console.log("type:",this.$route.meta.type);
+    this.getData()
+   
   }
 };
 </script>
 
 <style scoped lang="scss">
-a .list-item {
-  color: #000;
+.list-item {
+  a{
+   color: #000;
   width: 7.5rem;
   height: 101px;
   font-size: 12px;
@@ -62,7 +78,8 @@ a .list-item {
   justify-content: space-around;
   border-bottom: 1px solid #ddd;
   margin-bottom: 10px;
-  .img-box {
+  }
+   .img-box {
     width: 1.6rem;
     height: 80px;
     line-height: 80px;
@@ -72,7 +89,7 @@ a .list-item {
       display: block;
     }
   }
-  .content {
+  a .content {
     width: 5.3rem;
     height: 80px;
     display: flex;

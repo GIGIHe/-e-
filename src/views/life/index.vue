@@ -6,7 +6,7 @@
         </div>
         <div class="menu">
             <div class="top">
-                <router-link to="/#">
+                <router-link to="/study">
                     <img src="../../../public/img/icon1.png" alt="">
                     <span>政治学习</span>
                 </router-link>
@@ -26,7 +26,7 @@
                     <img src="../../../public/img/icon4.png" alt="">
                     <span>民主评议</span>
                 </router-link>
-                <router-link to="/#">
+                <router-link to="/findpart">
                     <img src="../../../public/img/icon5.png" alt="">
                     <span>流动党员找组织</span>
                 </router-link>

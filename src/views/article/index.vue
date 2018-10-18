@@ -1,23 +1,18 @@
 <template>
   <div>
-    <Header></Header>
-    <div class="article-wraper mt">
-      <h3 class="title">{{this.artcicleData.title}}</h3>
-      <div class="log"><img :src="this.artcicleData.pic" alt=""></div>
-      <div class="content" v-html="this.artcicleData.content"></div>
-    </div>
+    <News :data = "artcicleData"></News>
   </div>
 </template>
 
 <script>
-import Header from "@/components/Header";
+import News from "@/components/News";
 export default {
   components: {
-    Header
+    News
   },
   data() {
     return {
-      artcicleData: ""
+      artcicleData: {}
     };
   },
   methods: {
@@ -38,33 +33,5 @@ export default {
 </script>
 
 <style lang = "scss">
-.article-wraper {
-  .title {
-    font-size: 20px;
-    font-weight: 700;
-    color: #555;
-    margin-bottom: 10px;
-  }
-  .content {
-    font-size: 18px;
-    h4,
-    p{
-     line-height: 2;
-    }
-  }
-  .log {
-    font-size: 12px;
-    width: 7.5rem;
-    img {
-      display: block;
-      width: 7.1rem;
-      margin: 0 auto;
-    }
-  }
-}
-.ql-align-center{
-  img{
-    width: 7.5rem;
-  }
-}
+
 </style>

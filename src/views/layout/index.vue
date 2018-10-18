@@ -14,7 +14,7 @@
         <div class="swipe">
             <swiper :options="swiperOption">
                 <swiper-slide v-for="(item,index) in swipeData" :key="index">
-                   <router-link :to="{name:'article',params:{id:item.url}}">
+                   <router-link :to="{name:'newsDetail',params:{id:item.url}}">
                     <img :src="item.imgUrl">
                     <p class="img-text">{{item.title}}</p>
                     </router-link>
@@ -27,7 +27,7 @@
         <!-- menulist start -->
         <div class="menulist">
             <div class="row">
-                <router-link to="/newseye">
+                <router-link to="/neweyes">
                     <img src="../../../public/img/icon_01.png">
                     <p class="row-text">信工新闻眼</p>
                 </router-link>
@@ -68,11 +68,11 @@
             <div class="banner-r">
                 <div class="banner-r-item">
                    <router-link to="/anytimestudy"></router-link>
-                   <router-link to="/AutoPhoto"></router-link>
+                   <router-link to="/autoPhoto"></router-link>
                 </div>
                 <div class="banner-r-item">
-                    <router-link to="/"></router-link>
-                    <router-link to="/"></router-link>
+                    <router-link to="/system"></router-link>
+                    <router-link to="/activity"></router-link>
                 </div>
             </div>
         </div>

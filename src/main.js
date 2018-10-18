@@ -3,7 +3,9 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import $axios from './utils/index'
+import store from './store/index'
+// import $axios from './utils/index'
+import { $axios } from "./utils/index";
 import MintUI from "mint-ui"//引入
 import "mint-ui/lib/style.css"
 import VueAwesomeSwiper from "vue-awesome-swiper";
@@ -16,6 +18,7 @@ Vue.use(VueAwesomeSwiper);
 new Vue({
   el: "#app",
   router,
+  store,
   components: { App },
   template: "<App/>"
 });

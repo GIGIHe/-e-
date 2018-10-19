@@ -5,7 +5,31 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     userInfo: {
-      username: ""
+      address: "",
+      age: 18,
+      birthday: "",
+      branchId: "",
+      count: 0,
+      disabled: 0,
+      education: "",
+      header: "",
+      hometown: "",
+      id: 2,
+      idCard: "",
+      jobRank: "",
+      joinPartyTime: "",
+      lastPayTime: "",
+      leadPerson: "",
+      nation: "",
+      partyStatus: "",
+      phone: "",
+      qqNum: "",
+      salary: "",
+      sex: "",
+      special: "",
+      totalScore: "",
+      username: "",
+      wxNum: ""
     },
     token: ""
   },

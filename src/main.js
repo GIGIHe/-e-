@@ -6,8 +6,8 @@ import router from './router'
 import store from './store/index'
 // import $axios from './utils/index'
 import { $axios } from "./utils/index";
-import MintUI from "mint-ui"//引入
-import "mint-ui/lib/style.css"
+import MintUI from "mint-ui";
+import "mint-ui/lib/style.css";
 import VueAwesomeSwiper from "vue-awesome-swiper";
 import "swiper/dist/css/swiper.css";
 Vue.prototype.$axios = $axios;

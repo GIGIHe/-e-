@@ -1,9 +1,15 @@
 <template>
-    <mt-header :title="title" :fixed="true" class="cl">
-        <div @click="handle" slot="left">
-            <mt-button icon="back"></mt-button>
-        </div>
-    </mt-header>
+  <mt-header :title="title" :fixed="true" class="cl">
+    <div @click="handle" slot="left">
+      <mt-button icon="back"></mt-button>
+    </div>
+    <div @click="$router.push('/updateinfo')" slot="right" v-if="$route.name=='userinfo'">
+      <span>编辑</span>
+    </div>
+    <div @click="$router.push('/userinfo')" slot="right" v-if="$route.name=='updateinfo'">
+      <span>保存</span>
+    </div>
+  </mt-header>
 </template>
 <script>
 import { Header } from "mint-ui";
@@ -24,6 +30,7 @@ export default {
 .cl {
   background-color: #c50206;
   height: 44px;
+  z-index: 999;
   /deep/ .mint-header-title {
     font-size: 16px;
   }

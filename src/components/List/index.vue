@@ -16,14 +16,15 @@
           </div>
            </router-link>
         </li>
-      <mt-spinner type="fading-circle" class="spiner"></mt-spinner>
-      <p v-if="isShow">没有更多数据</p>
+      <p class="mb" :loading = "loading()">没有更多数据</p>
     </ul>
+     <Tabbar v-if="$route.name=='notice'"></Tabbar>
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header";
+import Tabbar from '@/components/Tabbar'
 export default {
   props: {
     data: {
@@ -32,13 +33,14 @@ export default {
   },
 
   components: {
-    Header
+    Header,Tabbar
   },
   data() {
     return {
       listData: [],
       name:'',
-      isShow: true
+      isShow: false,
+      total:0
     };
   },
   methods: {
@@ -49,8 +51,16 @@ export default {
         .then(res => {
           if (res.code == 1) {
             this.listData = res.rows;
+            this.total = res.total
           }
         });
+    },
+    loading(){
+      if(this.total == this.listData.length){
+        return this.isShow = true
+      }else{
+        return this.isShow = false
+      }
     }
   },
   watch: {
@@ -61,7 +71,8 @@ export default {
   created() {
     console.log("current:", this.currentValue);
     console.log("type:",this.$route.meta.type);
-    this.getData()
+    this.getData();
+    // this.loading()
    
   }
 };
@@ -112,6 +123,7 @@ export default {
   p {
     font-size: 12px;
     text-align: center;
+    margin: 10px 0 50px;
   }
 }
 </style>

@@ -27,4 +27,29 @@ ul li{
 .a-cl{
   color: #333;
 }
+.clearfix::after{
+  content: "";
+  display: block;
+  overflow: hidden;
+  clear: both;
+  height: 0;
+}
+.fz-12{
+  font-size: 12px;
+}
+.fz-14{
+  font-size: 14px;
+}
+.fz-16{
+  font-size: 16px;
+}
+.fz-18{
+  font-size: 18px;
+}
+.fz-20{
+  font-size: 20px;
+}
+.cl-w{
+  color: #fff;
+}
 </style>

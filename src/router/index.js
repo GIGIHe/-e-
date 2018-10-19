@@ -11,13 +11,15 @@ const components = {
   List: () => import("@/components/List/index"),
   Notice: () => import("@/views/notice/index"),
   Mypart: () => import("@/views/mypart/index"),
+  Userinfo: () => import("@/views/mypart/userinfo"),
+  Score: () => import("@/views/mypart/score"),
   FindPart: () => import("@/views/findPart/index")
   // Anytimestudy: () => import("@/views/anytimestudy/index")
 };
 Vue.use(Router);
 
 const router = new Router({
-  mode: "history",
+  // mode: "history",需要后台支持
   routes: [
     {
       path: "/",
@@ -92,6 +94,30 @@ const router = new Router({
         title: "我的党建"
       },
       component: components.Mypart
+    },
+    {
+      path: "/userinfo",
+      name: "userinfo",
+      meta: {
+        title: "个人信息"
+      },
+      component: components.Userinfo
+    },
+    {
+      path: "/updateinfo",
+      name: "updateinfo",
+      meta: {
+        title: "修改个人信息"
+      },
+      component: components.Userinfo
+    },
+    {
+      path: "/score",
+      name: "score",
+      meta: {
+        title: "个人量化积分"
+      },
+      component: components.Score
     },
     {
       path: "/showidentity",

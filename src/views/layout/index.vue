@@ -36,7 +36,7 @@
                     <img src="../../../public/img/icon_03.png">
                     <p class="row-text">掌上组织生活</p>
                 </router-link>
-                <router-link to="/login">
+                <router-link :to="$store.state.userInfo.username ? '/interactive':'/login'">
                     <img src="../../../public/img/icon_05.png">
                     <p class="row-text">党员云互动</p>
                 </router-link>

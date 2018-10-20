@@ -8,6 +8,7 @@
       <!-- //一个需要绑定 -->
       <!-- <img :src="userInfo ? '../../../public/mypartImg/头像@2x.png' : 'userInfo.header'" > -->
       <router-link to="/login" class="a-cl" v-if="!this.$store.state.userInfo.header">你还没有登录，请登录</router-link>
+      <p v-else class="cl-w">{{$store.state.userInfo.username}}</p>
     </div>
     <div class="userinfo-list">
       <div @click="handleInfo" class="a-cl allinfo">
@@ -95,14 +96,7 @@ export default {
     }
   },
   created() {
-    // console.log("name:", this.userInfo.header);
-    // 查询字符串
-    // let query = location.search;
-    // let query1 = query.substring(1);
-    // let queryarr = query1.split('&');
-    
-    //  queryarr.forEach(
-    //    item=>{let obj = {};let key = item.split("=")[0];let value = item.split("=")[1]; obj[key] = obj[value]})
+
   }
  
 };

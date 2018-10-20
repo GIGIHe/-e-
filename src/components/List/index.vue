@@ -16,7 +16,8 @@
           </div>
            </router-link>
         </li>
-      <p class="mb" :loading = "loading()">没有更多数据</p>
+        <mt-spinner type="snake" class="spiner" v-show="isShow"></mt-spinner>
+      <p class="mb" v-show="!isShow">没有更多数据</p>
     </ul>
      <Tabbar v-if="$route.name=='notice'"></Tabbar>
   </div>
@@ -40,12 +41,13 @@ export default {
       listData: [],
       name:'',
       isShow: false,
-      total:0
+      total:1
     };
   },
   methods: {
  getData() {
    let type = this.$route.meta.type
+   this.isShow = true
       this.$axios
         .get(`/hhdj/news/newsList.do?page=1&rows=10&type=${type}`)
         .then(res => {
@@ -53,13 +55,14 @@ export default {
             this.listData = res.rows;
             this.total = res.total
           }
+          this.isShow = false
         });
     },
     loading(){
       if(this.total == this.listData.length){
-        return this.isShow = true
-      }else{
         return this.isShow = false
+      }else{
+        return this.isShow = true
       }
     }
   },
@@ -72,9 +75,8 @@ export default {
     console.log("current:", this.currentValue);
     console.log("type:",this.$route.meta.type);
     this.getData();
-    // this.loading()
-   
-  }
+  //  console.log('query: ',this.$route.query);
+}
 };
 </script>
 

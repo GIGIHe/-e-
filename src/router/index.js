@@ -10,10 +10,12 @@ const components = {
   AutoPhoto: () => import("@/views/anytimephoto/index"),
   List: () => import("@/components/List/index"),
   Notice: () => import("@/views/notice/index"),
+  InterActive: () => import("@/views/interactive/index"),
   Mypart: () => import("@/views/mypart/index"),
   Userinfo: () => import("@/views/mypart/userinfo"),
   Score: () => import("@/views/mypart/score"),
-  FindPart: () => import("@/views/findPart/index")
+  FindPart: () => import("@/views/findPart/index"),
+  uploading: () => import("@/components/uploading/index")
   // Anytimestudy: () => import("@/views/anytimestudy/index")
 };
 Vue.use(Router);
@@ -69,6 +71,14 @@ const router = new Router({
         type: 3
       },
       component: components.List
+    },
+    {
+      path: "/interactive",
+      name: "interactive",
+      meta: {
+        title: "党员云互动"
+      },
+      component: components.InterActive
     },
     {
       path: "/autoPhoto",
@@ -172,6 +182,14 @@ const router = new Router({
         type: 7
       },
       component: components.FindPart
+    },
+    {
+      path: "/uploading",
+      name: "uploading",
+      meta: {
+        title: "上传图片",
+      },
+      component: components.uploading
     }
   ]
 });

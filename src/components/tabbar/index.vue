@@ -6,8 +6,8 @@
         <span>首页</span>
       </div>
     </router-link>
-    <router-link to="/notice" class="a-cl">
-      <div class="item" :class="$route.name=='notice'?'active':''">
+    <router-link to="/notice" class="a-cl" :class="$route.name=='notice'?'active':''">
+      <div class="item">
         <i class="iconfont icon-xiaoxi"></i>
         <span>通知早知道</span>
       </div>
@@ -44,7 +44,9 @@ export default {};
     .item {
       display: flex;
       flex-direction: column;
-      /deep/.iconfont {
+      /deep/ .icon-touxiang,
+      .icon-xiaoxi,
+      .icon-party {
         margin-top: 7px;
       }
     }
@@ -53,5 +55,6 @@ export default {};
 .active {
   color: #ca282b;
   border-top: 1px solid #ca282b;
+  margin-top: -1px;
 }
 </style>

@@ -4,7 +4,8 @@
         <ul class="list-wrap mt">
             <li class="list-item ">
                 <span class="item-l">头像</span>
-                <span class="item-r"><img :src="userInfo.header" alt=""></span>
+                <span class="item-r" v-if="isEditing()"><img :src="userInfo.header" alt=""  @click="updateImg"></span>
+                <!-- <upload v-else v-model="userInfo.header"></upload> -->
             </li>
             <li class="list-item">
                 <span class="item-l">姓名</span>
@@ -44,9 +45,11 @@
             </li>
             <li class="list-item ">
                 <span class="item-l">性别</span>
-                <span class="item-r">
-                    <input type="radio" name="sex">{{userInfo.sex}} </span>
-                <!-- <input type="radio" name="sex"> -->
+                <span v-if="isEditing()">{{userInfo.sex==0?'女':'男'}}</span>
+                <span class="item-r" v-else>
+                    <input type="radio" name="sex" value="1" v-model="userInfo.sex">男
+                    <input type="radio" name="sex" value="0" v-model="userInfo.sex">女
+                </span>
             </li>
             <li class="list-item ">
                 <span class="item-l">最高学历</span>
@@ -55,8 +58,8 @@
             </li>
             <li class="list-item ">
                 <span class="item-l">职称</span>
-                <span class="item-r" v-if="isEditing()">{{userInfo.partyStatus}}</span>
-                <input type="text" v-else v-model="userInfo.partyStatus">
+                <span class="item-r" v-if="isEditing()">{{userInfo.jobRank}}</span>
+                <input type="text" v-else v-model="userInfo.jobRank">
             </li>
             <li class="list-item ">
                 <span class="item-l">薪资水平</span>
@@ -66,17 +69,23 @@
             <li class="list-item ">
                 <span class="item-l">入党时间</span>
                 <span class="item-r" v-if="isEditing()">{{userInfo.joinPartyTime}}</span>
-                <input type="text" v-else v-model="userInfo.joinPartyTime">
+                <input type="date" v-else v-model="userInfo.joinPartyTime">
             </li>
             <li class="list-item ">
                 <span class="item-l">党费最后缴纳时间</span>
                 <span class="item-r" v-if="isEditing()">{{userInfo.lastPayTime}}</span>
-                <input type="text" v-else v-model="userInfo.lastPayTime">
+                <input type="date" v-else v-model="userInfo.lastPayTime">
             </li>
             <li class="list-item ">
                 <span class="item-l">当前身份</span>
-                <span class="item-r" v-if="isEditing()">{{userInfo.partyStatus}}</span>
-                <input type="text" v-else v-model="userInfo.partyStatus">
+                <!-- <span class="item-r" v-if="isEditing()">{{userInfo.partyStatus==1?'预备党员':userInfo.partyStatus==2?'党员':'积极分子'}}</span> -->
+                <span class="item-r" v-if="isEditing()">{{partyStatus}}</span>
+                <!-- <input type="text" v-else v-model="userInfo.partyStatus"> -->
+                <select name="" id="" v-else v-model="userInfo.partyStatus">
+                    <option value="1">预备党员</option>
+                    <option value="2">党员</option>
+                    <option value="3">积极分子</option>
+                </select>
             </li>
         </ul>
     </div>
@@ -84,10 +93,12 @@
 
 <script>
 import Header from "@/components/Header";
+import upload from '@/components/uploading'
 import { mapState } from "vuex";
 export default {
   components: {
-    Header
+    Header,
+    upload
   },
   data() {
     return {
@@ -101,13 +112,29 @@ export default {
       } else {
         return (this.isShow = true);
       }
+    },
+    updateImg() {
+      this.$router.push("/uploading");
     }
   },
   //   created(){
   // this.isEditing()
   //   },
   computed: {
-    ...mapState(["userInfo"])
+    ...mapState(["userInfo"]),
+    partyStatus() {
+      switch (this.userInfo.partyStatus) {
+        case "1":
+          return "预备党员";
+        case "2":
+          return "党员";
+        case "3":
+          return "积极分子";
+
+        default:
+          break;
+      }
+    }
   }
 };
 </script>
@@ -135,7 +162,7 @@ export default {
       }
     }
     input {
-      max-width: 1.8rem;
+      max-width: 2.2rem;
       border: none;
       text-align: right;
       box-sizing: border-box;

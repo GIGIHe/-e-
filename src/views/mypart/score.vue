@@ -3,7 +3,7 @@
         <Header></Header>
         <div class="banner mt">
             <img src="../../../public/img/jifen.png">
-            <span class="score fz-14 cl-w">99</span>
+            <span class="score fz-14 cl-w" v-text="this.$store.state.userInfo.totalScore"></span>
         </div>
         <div class="scoreDetail">
             <i class="iconfont icon-jifen-active score-item score-format"></i>

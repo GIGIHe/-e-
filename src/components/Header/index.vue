@@ -6,7 +6,7 @@
     <div @click="$router.push('/updateinfo')" slot="right" v-if="$route.name=='userinfo'">
       <span>编辑</span>
     </div>
-    <div @click="$router.push('/userinfo')" slot="right" v-if="$route.name=='updateinfo'">
+    <div @click="handleSave" slot="right" v-if="$route.name=='updateinfo'">
       <span>保存</span>
     </div>
   </mt-header>
@@ -17,6 +17,16 @@ export default {
   methods: {
     handle() {
       this.$router.history.go(-1);
+    },
+    handleSave(){
+      this.$axios.post('/hhdj/user/modifyInfo.do').then(res=>{
+        if(res.code == 1){
+          // Toast('修改成功')
+          this.$router.push('/userinfo')
+        }
+      }).catch(err=>{
+        Toast(err)
+      })
     }
   },
   computed: {

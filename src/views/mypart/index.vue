@@ -5,9 +5,8 @@
       <!-- userInfo是一个对象即使为空也不为假 -->
       <img src="../../../public/mypartImg/头像@2x.png" alt="" v-if="!this.$store.state.userInfo.header">
       <img :src="this.$store.state.userInfo.header" alt="" v-else>
-      <!-- //一个需要绑定 -->
       <!-- <img :src="userInfo ? '../../../public/mypartImg/头像@2x.png' : 'userInfo.header'" > -->
-      <router-link to="/login" class="a-cl" v-if="!this.$store.state.userInfo.header">你还没有登录，请登录</router-link>
+      <router-link to="/login" class="a-cl" v-if="!this.$store.state.userInfo">你还没有登录，请登录</router-link>
       <p v-else class="cl-w">{{$store.state.userInfo.username}}</p>
     </div>
     <div class="userinfo-list">
@@ -57,22 +56,21 @@ export default {
   // },
   methods: {
     handleLogout() {
-      const user = {};
+      // const user = {};
       if (!this.$store.state.userInfo.header) {
         Toast("用户未登录，请登录");
         setTimeout(() => {
           this.$router.push("/login");
         }, 1500);
       } else {
-        this.$axios.get("/hhdj/user/userInfo.do").then(res => {
-          if (res.code == 1) {
+        
             Toast("退出登录，请重新登录");
             setTimeout(() => {
               this.$router.push("/login");
             }, 1000);
-            this.$store.commit("CHANGE_USER", user);
-          }
-        });
+            this.$store.commit("CHANGE_USER", {});
+        
+        
       }
     },
     handleInfo() {
@@ -84,7 +82,7 @@ export default {
     },
     handleClick($event) {
       console.log("test: ", $event);
-      console.log("test: ", $event.currentTarget);
+      console.log("test1: ", $event.currentTarget.__proto__);
 
       if (this.$store.state.userInfo.username) {
         //  currentTarget 事件对象本身

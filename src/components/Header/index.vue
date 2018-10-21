@@ -3,12 +3,13 @@
     <div @click="handle" slot="left">
       <mt-button icon="back"></mt-button>
     </div>
-    <div @click="$router.push('/updateinfo')" slot="right" v-if="$route.name=='userinfo'">
+    <!-- <div @click="$router.push('/updateinfo')" slot="right" v-if="$route.name=='userinfo'">
       <span>编辑</span>
     </div>
-    <div @click="handleSave" slot="right" v-if="$route.name=='updateinfo'">
-      <span>保存</span>
-    </div>
+    <div slot="right" v-show="$route.name=='updateinfo'" @click="handleSave">  -->
+<!-- 将编辑和保存按钮控制在公共组件上的写法，需要emit触发事件进行操作，emit触发事件不一定都要传入具体的值，还可以通过emit触发事件 -->
+      <!-- <span>保存</span>
+    </div> -->
   </mt-header>
 </template>
 <script>
@@ -18,16 +19,9 @@ export default {
     handle() {
       this.$router.history.go(-1);
     },
-    handleSave(){
-      this.$axios.post('/hhdj/user/modifyInfo.do').then(res=>{
-        if(res.code == 1){
-          // Toast('修改成功')
-          this.$router.push('/userinfo')
-        }
-      }).catch(err=>{
-        Toast(err)
-      })
-    }
+    // handleSave(){
+    //    this.$emit('success')
+    // }
   },
   computed: {
     title() {

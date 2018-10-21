@@ -28,11 +28,13 @@ export default {
   },
   methods: {
     login() {
+      let formdata = new FormData();
+      let id_card = 1001;
+      let password = 123456;
+      formdata.append('id_card',id_card) 
+      formdata.append('password',password);
       this.$axios
-        .post("/hhdj/user/userLogin.do", {
-          id_card: this.username,
-          password: this.password
-        })
+        .post("/hhdj/user/userLogin.do", formdata)
         .then(res => {
           if (res.code == 1) {
             //   localStorage.setItem = res.token
@@ -48,7 +50,10 @@ export default {
           }
         });
     }
-  }
+  },
+  // created(){
+  //   this.login()
+  // }
 };
 </script>
 

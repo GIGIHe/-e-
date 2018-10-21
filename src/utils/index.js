@@ -1,4 +1,5 @@
 import axios from "axios";
+import store from "../store/index";
 const env = process.env.NODE_ENV;
 let baseURL = env == "development" ? "/api" : "";
 // const qs = require('querystring')
@@ -50,27 +51,33 @@ const instance = axios.create({
   timeout: 15000
 });
 
-const qs = require("querystring");
-instance.interceptors.request.use(
-  function(config) {
-    if (window.sessionStorage.vuex) {
-      let token = JSON.parse(window.sessionStorage.vuex).token
-      config.headers.token = token
-    }
-    if (config.method == "post") {
-      config.data = qs.stringify(config.data);
-      config.headers["Content-Type"] = "application/x-www-form-urlencoded";
-    }
-    return config;
-  },
-  function(error) {
-    return Promise.reject(error);
-  }
-);
+// const qs = require("querystring");
+// instance.interceptors.request.use(
+//   function(config) {
+//     if (window.sessionStorage.vuex) {
+//       let token = JSON.parse(window.sessionStorage.vuex).token
+//       config.headers.token = token
+//     }
+//     if (config.method == "post") {
+//       config.data = qs.stringify(config.data);
+//       config.headers["Content-Type"] = "application/x-www-form-urlencoded";
+//     }
+//     return config;
+//   },
+//   function(error) {
+//     return Promise.reject(error);
+//   }
+// );
 
 const xhr = {
   get(url, data, config) {
     return new Promise((resolve, reject) => {
+      let token = store.state.token;
+      // console.log("get", token);
+      if (token) {
+        config = { headers: { token: token } };
+      }
+      // console.log('config',config);
       instance.get(url, { params: data }, config).then(res => {
         resolve(res.data);
       });
@@ -78,6 +85,12 @@ const xhr = {
   },
   post(url, data, config) {
     return new Promise((resolve, reject) => {
+      let token = store.state.token;
+      //                      // let config = {};
+      // console.log("token", token);
+      if (token) {
+        config = { headers: { token: token } };
+      }
       instance
         .post(url, data, config)
         .then(res => {

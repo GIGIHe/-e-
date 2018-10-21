@@ -6,7 +6,9 @@
                 <img src="../../../public/img/logo.png" />
             </div>
             <div class="login">
-                <router-link to="/Login">登录</router-link>
+              <!-- userInfo初始化为null时 -->
+                <!-- <router-link to="/Login" v-show="$store.state.userInfo">登录</router-link> -->
+                <router-link to="/Login" v-show="!$store.state.userInfo.username">登录</router-link>
             </div>
         </div>
         <!-- 头部结束 -->

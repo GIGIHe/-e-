@@ -10,19 +10,19 @@
                     <img src="../../../public/img/icon1.png" alt="">
                     <span>政治学习</span>
                 </router-link>
-                <router-link to="/#">
+                <router-link to="/thoughts">
 
                     <img src="../../../public/img/icon2.png" alt="">
                     <span>思想汇报</span>
 
                 </router-link>
-                <router-link to="/#">
+                <router-link to="/conclusion">
                     <img src="../../../public/img/icon3.png" alt="">
                     <span>心得总结</span>
                 </router-link>
             </div>
             <div class="bottom">
-                <router-link to="/#">
+                <router-link to="/choice">
                     <img src="../../../public/img/icon4.png" alt="">
                     <span>民主评议</span>
                 </router-link>

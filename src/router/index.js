@@ -6,11 +6,16 @@ const components = {
   NewsDetail: () => import("@/views/article/index"),
   // Newseye: () => import("@/views/newseye/index"),
   Life: () => import("@/views/life/index"),
+  Thoughts: () => import("@/views/life/thoughts"),
+  Choice: () => import("@/views/life/lifeChoice"),
+  Summary: () => import("@/views/life/personalsummary"),
+  Discuss: () => import("@/views/life/dicuss"),
   // Oneclick: () => import("@/views/oneclick/index"),
   AutoPhoto: () => import("@/views/anytimephoto/index"),
   List: () => import("@/components/List/index"),
   Notice: () => import("@/views/notice/index"),
   InterActive: () => import("@/views/interactive/index"),
+  Detail: () => import("@/views/interactive/detail"),
   Mypart: () => import("@/views/mypart/index"),
   Userinfo: () => import("@/views/mypart/userinfo"),
   Score: () => import("@/views/mypart/score"),
@@ -64,6 +69,46 @@ const router = new Router({
       component: components.Life
     },
     {
+      path: "/thoughts",
+      name: "thoughts",
+      meta: {
+        title: "思想汇报"
+      },
+      component: components.Thoughts
+    },
+    {
+      path: "/conclusion",
+      name: "conclusion",
+      meta: {
+        title: "心得总结"
+      },
+      component: components.Thoughts
+    },
+    {
+      path: "/summary",
+      name: "summary",
+      meta: {
+        title: "个人总结"
+      },
+      component: components.Summary
+    },
+    {
+      path: "/choice",
+      name: "choice",
+      meta: {
+        title: "掌上生活总结"
+      },
+      component: components.Choice
+    },
+    {
+      path: "/discuss",
+      name: "discuss",
+      meta: {
+        title: "民主评议"
+      },
+      component: components.Discuss
+    },
+    {
       path: "/oneclick",
       name: "oneclick",
       meta: {
@@ -79,6 +124,14 @@ const router = new Router({
         title: "党员云互动"
       },
       component: components.InterActive
+    },
+    {
+      path: "/detail/:id",
+      name: "detail",
+      meta: {
+        title: "评论详情"
+      },
+      component: components.Detail
     },
     {
       path: "/autoPhoto",
@@ -187,7 +240,7 @@ const router = new Router({
       path: "/uploading",
       name: "uploading",
       meta: {
-        title: "上传图片",
+        title: "上传图片"
       },
       component: components.uploading
     }

@@ -4,35 +4,36 @@ import createPersistedState from "vuex-persistedstate";
 Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
-    userInfo: null,
-    // userInfo: {
-    //   address: "",
-    //   age: '',
-    //   birthday: "",
-    //   branchId: "",
-    //   count: 0,
-    //   disabled: 0,
-    //   education: "",
-    //   header: "",
-    //   hometown: "",
-    //   id: 2,
-    //   idCard: "",
-    //   jobRank: "",
-    //   joinPartyTime: "",
-    //   lastPayTime: "",
-    //   leadPerson: "",
-    //   nation: "",
-    //   partyStatus: "",
-    //   phone: "",
-    //   qqNum: "",
-    //   salary: "",
-    //   sex: "",
-    //   special: "",
-    //   totalScore: "",
-    //   username: "",
-    //   wxNum: ""
-    // },
-    token: ""
+    // userInfo: null,
+    userInfo: {
+      address: "",
+      age: "",
+      birthday: "",
+      branchId: "",
+      count: 0,
+      disabled: 0,
+      education: "",
+      header: "",
+      hometown: "",
+      id: 2,
+      idCard: "",
+      jobRank: "",
+      joinPartyTime: "",
+      lastPayTime: "",
+      leadPerson: "",
+      nation: "",
+      partyStatus: "",
+      phone: "",
+      qqNum: "",
+      salary: "",
+      sex: "",
+      special: "",
+      totalScore: "",
+      username: "",
+      wxNum: ""
+    },
+    token: "",
+    commentList: ""
   },
   actions: {},
   mutations: {
@@ -41,6 +42,9 @@ const store = new Vuex.Store({
     },
     CHANGE_TOKEN(state, payload) {
       state.token = payload;
+    },
+    CHANGE_COMMENT(state, payload) {
+      state.commentList = payload;
     }
   },
   plugins: [

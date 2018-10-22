@@ -6,6 +6,7 @@ import router from './router'
 import store from './store/index'
 // import $axios from './utils/index'
 import { $axios } from "./utils/index";
+import Header from '../src/components/Header'//引入公共组件
 import MintUI from "mint-ui";
 import "mint-ui/lib/style.css";
 import VueAwesomeSwiper from "vue-awesome-swiper";
@@ -14,6 +15,7 @@ Vue.prototype.$axios = $axios;
 Vue.config.productionTip = false
 Vue.use(MintUI);
 Vue.use(VueAwesomeSwiper);
+Vue.component('Header',Header)//全局注册组件，写成对象的格式，不能简写
 /* eslint-disable no-new */
 new Vue({
   el: "#app",

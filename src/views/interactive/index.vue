@@ -27,21 +27,32 @@
         <div class="content fz-16 a-cl">
           {{item.content}}
         </div>
-        <div class="reply fz-14">
+        <div class="reply fz-14" @click="hanldeReply(item.forumId)">
           <i class="iconfont icon-huifusixinpinglunxiaoxiliaotianxianxingmianxing f-cl"></i>
           回复:{{item.commentCount}}</div>
       </div>
     </div>
-    <i class="iconfont icon-jiahao addComment cl-w"></i>
+    <i class="iconfont icon-jiahao addComment cl-w" @click="addComment"></i>
+    <div class="comment" v-show="isShow">
+      <div class="top"></div>
+      <form action="" class="form-area">
+        <textarea name="" id="" cols="30" rows="10" class="text" v-model="content"></textarea>
+        <input type="submit" value="发布" class="s-btn cl-w" @click="handleAdd">
+        <input type="button" value="取消" @click="handleCancel" class="c-btn">
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header";
+import { Toast } from "mint-ui";
 export default {
   data() {
     return {
-      forumData: []
+      forumData: [],
+      content: "",
+      isShow: false
     };
   },
   components: {
@@ -54,11 +65,35 @@ export default {
         .then(res => {
           if (res.code == 1) {
             this.forumData = res.rows;
+            this.$store.commit('CHANGE_COMMENT',res.rows)
           }
         })
         .catch(err => {
           console.log(err);
         });
+    },
+    addComment() {
+      this.isShow = true;
+    },
+    handleAdd() {
+      let form = new FormData();
+      form.append("content", this.content);
+      form.append("type", 1);
+      this.$axios.post("/hhdj/forum/saveForum.do", form).then(res => {
+        if (res.code == 1) {
+          console.log(res.msg);
+          this.isShow = false;
+        } else {
+          Toast("帖子内容不能为空");
+        }
+      });
+    },
+    handleCancel() {
+      this.isShow = false;
+    },
+    hanldeReply(id){
+      console.log(id);
+       this.$router.push({ name: 'detail', params:{forumId:id}})
     }
   },
   created() {
@@ -79,6 +114,7 @@ export default {
   padding: 10px 5px;
   background-color: #fff;
   margin-bottom: 10px;
+  position: relative;
   .details {
     width: 100%;
     display: flex;
@@ -134,5 +170,52 @@ export default {
   text-align: center;
   line-height: 1.2rem;
   border-radius: 50%;
+}
+.comment {
+  /* width: 7.5rem; */
+  height: 100%;
+  border: 1px solid #f00;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  animation: run .5s 0s 1;
+  @keyframes run {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+  .top {
+    flex: 4;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 666;
+  }
+  .form-area {
+    background-color: #eee;
+    flex: 1;
+    z-index: 666;
+    padding: 10px;
+    box-sizing: border-box;
+    .text {
+      width: 100%;
+    }
+    .s-btn {
+      background-color: #f00;
+    }
+
+    .s-btn,
+    .c-btn {
+      outline: none;
+      border: none;
+      width: 1.1rem;
+      height: 28px;
+      margin-left: 4px;
+    }
+  }
 }
 </style>

@@ -78,7 +78,7 @@ const xhr = {
         config = { headers: { token: token } };
       }
       // console.log('config',config);
-      instance.get(url, { params: data }, config).then(res => {
+      instance.get(url, { params: data, ...config }).then(res => {
         resolve(res.data);
       });
     });

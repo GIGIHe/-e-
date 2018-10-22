@@ -3,7 +3,8 @@
     <!-- 触发的事件 -->
     <!-- <Header @success ="change_userinfo"></Header> -->
     <Header></Header>
-    <span class="edit fz-16 cl-w" v-show="!isEditing" @click="handleShow">编辑</span><span class="save fz-16 cl-w" v-show="isEditing" @click="handleSave">保存</span>
+    <span class="edit fz-16 cl-w" v-show="!isEditing" @click="handleShow">编辑</span>
+    <span class="save fz-16 cl-w" v-show="isEditing" @click="handleSave">保存</span>
     <ul class="list-wrap mt">
       <li class="list-item ">
         <span class="item-l">头像</span>
@@ -97,7 +98,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 import Header from "@/components/Header";
 import upload from "@/components/uploading";
 import { mapState } from "vuex";
@@ -108,28 +109,40 @@ export default {
   },
   data() {
     return {
-      headerUrl:'',
-      isEditing:false
+      headerUrl: "",
+      isEditing: false
     };
   },
   methods: {
-   handleSave(){
+    handleSave() {
       //geshi
       console.log(this.userInfo.header);
       let form = new FormData();
-      form.append("username",this.userInfo.username)
-              //  console.log('header00',this.userInfo.header);
-    this.$axios.post('/hhdj/user/modifyInfo.do',form).then(res=>{
-        if(res.code == 1){
-          // Toast('修改成功')
-          this.$axios.get('/hhdj/user/userInfo.do').then(res=>{
-            // this.userInfo = res.data
-          })
-          this.isEditing = false
-        }
-      }).catch(err=>{
-      
-      })
+      form.append("username", this.userInfo.username);
+      form.append("header", this.headerUrl);
+      //  console.log('header00',this.userInfo.header);
+      this.$axios
+        .post("/hhdj/user/modifyInfo.do", form)
+        .then(res => {
+          if (res.code == 1) {
+            // Toast('修改成功')
+            this.$axios
+              .get(
+                "/hhdj/user/userInfo.do"
+                // {
+                //   heades:{
+                //     token:this.$store.token
+                //   }
+                // }
+              )
+              .then(res => {
+                //更新store中userInfo数据
+                this.$store.commit("CHANGE_USER", res.data);
+              });
+            this.isEditing = false;
+          }
+        })
+        .catch(err => {});
     },
     handle(e) {
       var file = e.target.files[0];
@@ -143,24 +156,20 @@ export default {
         // console.log(typeof imgsrc);
         let form = new FormData();
         form.append("myFile", imgsrc);
-         console.log("file",file);
+        console.log("file", file);
         // console.log("form",form);
-        this.$axios.post("/hhdj/image/uploadBase64.do", form, 
-       ).then(res=>{
-          this.userInfo.header = res.url
+        this.$axios.post("/hhdj/image/uploadBase64.do", form).then(res => {
+          this.headerUrl = res.url;
+          console.log("headerurl:", this.headerUrl);
         });
       };
 
       reader.readAsDataURL(file);
     },
-    handleShow(){
-  this.isEditing = true
-},
+    handleShow() {
+      this.isEditing = true;
+    }
   },
-
-
-
-
 
   // !isEditing() {
   //   if (this.$route.name == "updateinfo") {
@@ -259,7 +268,7 @@ export default {
   z-index: -333;
 } */
 .edit,
-.save{
+.save {
   position: fixed;
   right: 13px;
   top: 11px;

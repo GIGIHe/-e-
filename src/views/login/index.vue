@@ -19,7 +19,7 @@ import { Toast } from "mint-ui";
 export default {
   data() {
     return {
-      username: "1001",
+      username: "1003",
       password: "123456"
     };
   },
@@ -29,8 +29,8 @@ export default {
   methods: {
     login() {
       let formdata = new FormData();
-      let id_card = 1001;
-      let password = 123456;
+      let id_card = this.username;
+      let password = this.password;
       formdata.append('id_card',id_card) 
       formdata.append('password',password);
       this.$axios

@@ -38,7 +38,7 @@
                     <img src="../../../public/img/icon_03.png">
                     <p class="row-text">掌上组织生活</p>
                 </router-link>
-                <router-link :to="$store.state.userInfo.username ? '/interactive':'/login'">
+                <router-link :to="$store.state.userInfo ? '/interactive':'/login'">
                     <img src="../../../public/img/icon_05.png">
                     <p class="row-text">党员云互动</p>
                 </router-link>
@@ -52,7 +52,7 @@
                     <img src="../../../public/img/icon_06.png">
                     <p class="row-text">党员亮身份</p>
                 </router-link>
-                <router-link to="/">
+                <router-link to="/newtoday">
                     <img src="../../../public/img/icon_02.png">
                     <p class="row-text">党史上的今天</p>
                 </router-link>

@@ -116,10 +116,22 @@ export default {
   methods: {
     handleSave() {
       //geshi
-      console.log(this.userInfo.header);
+      // console.log(this.userInfo.header);
       let form = new FormData();
+      let headerUrl = this.headerUrl ?this.headerUrl:this.userInfo.header;
       form.append("username", this.userInfo.username);
-      form.append("header", this.headerUrl);
+      form.append("header", headerUrl);
+      form.append("hometown", this.userInfo.hometown);
+      form.append("address", this.userInfo.address);
+      form.append("nation", this.userInfo.nation);
+      form.append("wxNum", this.userInfo.wxNum);
+      form.append("qqNum", this.userInfo.qqNum);
+      form.append("sex", this.userInfo.sex);
+      form.append("education", this.userInfo.education);
+      form.append("jobRank", this.userInfo.jobRank);
+      form.append("joinPartyTime", this.userInfo.joinPartyTime);
+      form.append("salary", this.userInfo.salary);
+      form.append("lastPayTime", this.userInfo.lastPayTime);
       //  console.log('header00',this.userInfo.header);
       this.$axios
         .post("/hhdj/user/modifyInfo.do", form)

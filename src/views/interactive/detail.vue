@@ -1,36 +1,62 @@
 <template>
-    <div>
-        <Header></Header>
-        <div class="comment mt">
-            <div class="forum-list">
-                <div class="details">
-                    <div class="userMsg fz-16">
-                        <img :src=" commentData.header" alt="">
-                        <div class="user-time a-cl">
-                            <div class="username fz-18">{{ commentData.username}}</div>
-                            <div class="time fz-12">
-                                <span>
-                                    <i class="iconfont icon-jishiqi"></i>
-                                    <span>{{ commentData.currentTime}}</span>
-                                </span>
-                                <span>
-                                    <i class="iconfont icon-xiaolaba"></i>
-                                    <span>{{ commentData.type}}</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="content fz-16 a-cl">
-                    {{ commentData.content}}
-                </div>
+  <div>
+    <Header></Header>
+    <div class="comment mt">
+      <!-- 根据id，得到原贴 -->
+      <div class="forum-list">
+        <div class="details">
+          <div class="userMsg fz-16">
+            <img :src=" commentData.header" alt="">
+            <div class="user-time a-cl">
+              <div class="username fz-18">{{ commentData.username}}</div>
+              <div class="time fz-12">
+                <span>
+                  <i class="iconfont icon-jishiqi"></i>
+                  <span>{{ commentData.currentTime}}</span>
+                </span>
+                <span>
+                  <i class="iconfont icon-xiaolaba"></i>
+                  <span>{{ commentData.type}}</span>
+                </span>
+              </div>
             </div>
+          </div>
         </div>
-        <div class="add">
-            <input type="text" placeholder="评论内容" v-model="content" class="i-text">
-            <input type="submit" value="评论" class="i-submit cl-w" @click="addComment">
+        <div class="content fz-16 a-cl">
+          {{ commentData.content}}
         </div>
+      </div>
+      <!-- 得到回复列表 -->
+      <div class="forum-list" v-for="(item ,index) in newData" :key="index">
+        <div class="details">
+          <div class="userMsg fz-16">
+            <img :src=" item.header" alt="">
+            <div class="user-time a-cl">
+              <div class="username fz-18">{{ item.username}}</div>
+              <div class="time fz-12">
+                <span>
+                  <i class="iconfont icon-jishiqi"></i>
+                  <span>{{ item.timeFormat}}</span>
+                </span>
+                <span>
+                  <i class="iconfont icon-xiaolaba"></i>
+                  <span>{{ item.type}}</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content fz-16 a-cl">
+          {{ item.comment}}
+        </div>
+      </div>
     </div>
+
+    <div class="add">
+      <input type="text" placeholder="评论内容" v-model="content" class="i-text">
+      <input type="submit" value="评论" class="i-submit cl-w" @click="addComment">
+    </div>
+  </div>
 </template>
 
 <script>
@@ -40,7 +66,7 @@ export default {
     return {
       commentData: "",
       content: "",
-      ListData: ""
+      newData:[]
     };
   },
   methods: {
@@ -48,18 +74,22 @@ export default {
       //通过遍历数组找到对应id的数据
       let id = this.$route.params.forumId;
       //   console.log("细节", id);
-      console.log(this.commentList);
+      console.log('enen ',this.commentList);
       this.commentList.forEach(item => {
         if (item.forumId == id) {
           console.log("haoaho");
           this.commentData = item;
-          console.log(this.commentData);
+          console.log('commentdata: ',this.commentData);
         }
       });
-
-      //   this.$axios
-      //     .get(`/hhdj/forum/forumCommentList.do?page=1&rows=10&forum_id=${id}`)
-      //     .then(res => {});
+    },
+    getCommentList() {
+      let id = this.$route.params.forumId;
+      this.$axios
+        .get(`/hhdj/forum/forumCommentList.do?page=1&rows=10&forum_id=${id}`)
+        .then(res => {
+          this.newData = res.rows
+        });
     },
     addComment() {
       let id = this.$route.params.forumId;
@@ -68,7 +98,8 @@ export default {
       form.append("comment", this.content);
       this.$axios.post("/hhdj/forum/addComment.do", form).then(res => {
         if (res.code == 1) {
-          this.$store.commit("CHANGE_COMMENT", res.data);
+          // this.getCommentList()
+          this.getCommentList=[res.data,...this.getCommentList]
         }
       });
     }
@@ -77,6 +108,7 @@ export default {
     ...mapState(["commentList"])
   },
   created() {
+    this.getCommentList();
     this.getData();
   }
 };

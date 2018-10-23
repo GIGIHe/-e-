@@ -33,7 +33,9 @@ const store = new Vuex.Store({
       wxNum: ""
     },
     token: "",
-    commentList: ""
+    commentList: "",
+    // replyList:[],
+    // ownreply:""
   },
   actions: {},
   mutations: {
@@ -45,7 +47,13 @@ const store = new Vuex.Store({
     },
     CHANGE_COMMENT(state, payload) {
       state.commentList = payload;
-    }
+    },
+    //  CHANGE_LIST(state, payload) {
+    //    state.replyList = payload;
+    // },
+    // CHANGE_OWN(state, payload) {
+    //   state.ownreply = payload;
+    // },
   },
   plugins: [
     createPersistedState({

@@ -46,7 +46,8 @@ export default {
       let form = new FormData();
       form.append("pic_list", this.imgsrc);
       form.append("user_id", this.$store.state.token);
-      this.$axios
+      form.append("comment_id",'CEBBD1A4FF2147C8B9ED0CEA6AE90BCF');
+      this.$axios               
         .post("/hhdj/nationComment/submitSummary.do", form)
         .then(res => {
           console.log(res.msg);
@@ -81,5 +82,9 @@ export default {
   right: 0;
   bottom: 40px;
   text-align: center;
+}
+img{
+  width: 2.1rem;
+  height: 105px;
 }
 </style>

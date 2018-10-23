@@ -21,7 +21,7 @@ a{
 .mt{
   margin-top: 44px;
 }
-ul li{
+ li{
   list-style: none;
 }
 .a-cl{

@@ -35,7 +35,7 @@
     <i class="iconfont icon-jiahao addComment cl-w" @click="addComment"></i>
     <div class="comment" v-show="isShow">
       <div class="top"></div>
-      <form action="" class="form-area">
+      <form @submit.prevent  class="form-area">
         <textarea name="" id="" cols="30" rows="10" class="text" v-model="content"></textarea>
         <input type="submit" value="发布" class="s-btn cl-w" @click="handleAdd">
         <input type="button" value="取消" @click="handleCancel" class="c-btn">
@@ -83,6 +83,7 @@ export default {
         if (res.code == 1) {
           console.log(res.msg);
           this.isShow = false;
+          this.getData()
         } else {
           Toast("帖子内容不能为空");
         }
@@ -93,7 +94,8 @@ export default {
     },
     hanldeReply(id){
       console.log(id);
-       this.$router.push({ name: 'detail', params:{forumId:id}})
+     this.$router.push({name: 'detail', params: {forumId:id}})
+      //  this.$router.push({ name: 'detail', params:{forumId:id}})
     }
   },
   created() {

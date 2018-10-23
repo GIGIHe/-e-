@@ -6,7 +6,7 @@
       <img src="../../../public/mypartImg/头像@2x.png" alt="" v-if="!this.$store.state.userInfo.header">
       <img :src="this.$store.state.userInfo.header" alt="" v-else>
       <!-- <img :src="userInfo ? '../../../public/mypartImg/头像@2x.png' : 'userInfo.header'" > -->
-      <router-link to="/login" class="a-cl" v-if="!this.$store.state.userInfo.username">你还没有登录，请登录</router-link>
+      <router-link to="/login" class="a-cl" v-if="!this.$store.state.userInfo.branchId">你还没有登录，请登录</router-link>
       <p v-else class="cl-w">{{$store.state.userInfo.username}}</p>
     </div>
     <div class="userinfo-list">
@@ -20,12 +20,12 @@
         <p>个人量化积分</p>
         <i class="ico-r"><img src="../../../public/mypartImg/形状-7-拷贝-5@2x.png" alt=""></i>
       </div>
-      <div @click="handleClick" class="a-cl allinfo" data-link="/sur">
+      <div @click="handleClick" class="a-cl allinfo" data-link="/upword">
         <i class="icon-l"><img src="../../../public/mypartImg/修改密码icon@2x.png" alt=""></i>
         <p>修改密码</p>
         <i class="ico-r"><img src="../../../public/mypartImg/形状-7-拷贝-5@2x.png" alt=""></i>
       </div>
-      <div @click="handleClick" class="a-cl allinfo" data-link="/sur">
+      <div @click="handleClick" class="a-cl allinfo" data-link="/payfee">
         <i class="icon-l"><img src="../../../public/mypartImg/党费png.png" alt=""></i>
         <p>党费缴纳</p>
         <i class="ico-r"><img src="../../../public/mypartImg/形状-7-拷贝-5@2x.png" alt=""></i>
@@ -74,7 +74,7 @@ export default {
       }
     },
     handleInfo() {
-      if (!this.$store.state.userInfo.username) {
+      if (!this.$store.state.userInfo.branchId) {
         this.$router.push("/login");
       } else {
         this.$router.push("/userinfo");

@@ -10,6 +10,7 @@ const components = {
   Choice: () => import("@/views/life/lifeChoice"),
   Summary: () => import("@/views/life/personalsummary"),
   Discuss: () => import("@/views/life/dicuss"),
+  PartyNumber: () => import("@/views/life/partyNumber"),
   // Oneclick: () => import("@/views/oneclick/index"),
   AutoPhoto: () => import("@/views/anytimephoto/index"),
   List: () => import("@/components/List/index"),
@@ -17,10 +18,12 @@ const components = {
   InterActive: () => import("@/views/interactive/index"),
   Detail: () => import("@/views/interactive/detail"),
   Mypart: () => import("@/views/mypart/index"),
+  Upword: () => import("@/views/mypart/updatePassword"),
+  Payfee: () => import("@/views/mypart/Payfee"),
   Userinfo: () => import("@/views/mypart/userinfo"),
   Score: () => import("@/views/mypart/score"),
   FindPart: () => import("@/views/findPart/index"),
-  uploading: () => import("@/components/uploading/index")
+  Newtoday: () => import("@/views/newtoday/index")
   // Anytimestudy: () => import("@/views/anytimestudy/index")
 };
 Vue.use(Router);
@@ -69,6 +72,14 @@ const router = new Router({
       component: components.Life
     },
     {
+      path: "/newtoday",
+      name: "newtoday",
+      meta: {
+        title: "党史上的今天"
+      },
+      component: components.Newtoday
+    },
+    {
       path: "/thoughts",
       name: "thoughts",
       meta: {
@@ -107,6 +118,14 @@ const router = new Router({
         title: "民主评议"
       },
       component: components.Discuss
+    },
+    {
+      path: "/partyNumber/:id",
+      name: "partyNumber",
+      meta: {
+        title: "参选党员"
+      },
+      component: components.PartyNumber
     },
     {
       path: "/oneclick",
@@ -157,6 +176,22 @@ const router = new Router({
         title: "我的党建"
       },
       component: components.Mypart
+    },
+    {
+      path: "/upword",
+      name: "upword",
+      meta: {
+        title: "修改密码"
+      },
+      component: components.Upword
+    },
+    {
+      path: "/payfee",
+      name: "payfee",
+      meta: {
+        title: "党费支付"
+      },
+      component: components.Payfee
     },
     {
       path: "/userinfo",

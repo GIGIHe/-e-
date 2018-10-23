@@ -6,8 +6,10 @@
             <div class="fz-16 content" v-html="this.content"></div>
         </div>
         <div class="select">
-            <select class="select-item cl-w">
-                <option value="index" v-for="(item,index) in branchData" :key="index">{{item.branch}}</option>
+          <!-- 绑定当前分支的id -->
+            <select class="select-item cl-w" v-model="branchData.id">
+              <option value="0" selected = "selected" class="current">请选择分支</option>
+                <option :value="item.id" v-for="(item) in branchData" :key="item.id" class="option-item">{{item.branch}}</option>
             </select>
             <div class="next fz-16 cl-w" @click="handleNext()">下一步</div>
         </div>
@@ -18,9 +20,9 @@
 export default {
   data() {
     return {
-      vitalData: "",
-      content: "",
-      branchData: []
+      vitalData: "",//须知的全部内容，包括titledesc
+      content: "",//须知内容
+      branchData: []//分支数据
     };
   },
   methods: {
@@ -39,8 +41,14 @@ export default {
         }
       });
     },
-    handleNext(value){
-        console.log(value);
+    handleNext(){
+      // 获取当前分支的id
+      let id = this.branchData.id;
+        console.log('branch-id ',this.branchData.id);
+        //跳到对应的id
+        this.$router.push(`/partyNumber/${id}`)
+        // this.$router.push({path:'/partyNumber',query:{select_branch:id}})
+
     }
   },
   created() {
@@ -82,5 +90,13 @@ export default {
   .next {
     flex: 1;
   }
+}
+.current{
+  background-color: purple;
+}
+.option-item{
+  background-color: #fff;
+  color: #666;
+  border: 1px solid goldenrod
 }
 </style>

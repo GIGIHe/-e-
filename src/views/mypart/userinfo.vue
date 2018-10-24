@@ -119,7 +119,7 @@ export default {
       // console.log(this.userInfo.header);
       let form = new FormData();
       let headerUrl = this.headerUrl ?this.headerUrl:this.userInfo.header;
-      form.append("username", this.userInfo.username);
+      form.append("username", this.userInfo.username);//v-model的是vuex中的值，即使不修改也会被提交
       form.append("header", headerUrl);
       form.append("hometown", this.userInfo.hometown);
       form.append("address", this.userInfo.address);

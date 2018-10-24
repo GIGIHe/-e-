@@ -69,6 +69,7 @@ export default {
               this.$router.push("/login");
             }, 1000);
             this.$store.commit("CHANGE_USER", {});
+            this.$store.commit("CHANGE_TOKEN", '');
         
         
       }
@@ -156,7 +157,7 @@ export default {
   width: 7.5rem;
   height: 40px;
   line-height: 40px;
-  margin: 30px auto;
+  margin: 30px auto 62px;
   text-align: center;
   background-color: rgb(223, 44, 44);
   border-radius: 4px;

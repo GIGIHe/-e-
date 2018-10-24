@@ -52,4 +52,15 @@ a{
 .cl-w{
   color: #fff;
 }
+.spiner {
+    display: block;
+    width: 0.75rem;
+    margin: 0 auto;
+  }
+  .mb{
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    background-color: #fff;
+  }
 </style>

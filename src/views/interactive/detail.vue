@@ -27,31 +27,34 @@
         </div>
       </div>
       <!-- 得到回复列表 -->
-      <div class="forum-list" v-for="(item ,index) in newData" :key="index">
-        <div class="details">
-          <div class="userMsg fz-16">
-            <img :src=" item.header" alt="">
-            <div class="user-time a-cl">
-              <div class="username fz-18">{{ item.username}}</div>
-              <div class="time fz-12">
-                <span>
-                  <i class="iconfont icon-jishiqi"></i>
-                  <span>{{ item.timeFormat}}</span>
-                </span>
-                <span>
-                  <i class="iconfont icon-xiaolaba"></i>
-                  <span>{{ item.type}}</span>
-                </span>
+      <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="5">
+        <div class="forum-list" v-for="(item ,index) in newData" :key="index">
+          <div class="details">
+            <div class="userMsg fz-16">
+              <img :src=" item.header" alt="">
+              <div class="user-time a-cl">
+                <div class="username fz-18">{{ item.username}}</div>
+                <div class="time fz-12">
+                  <span>
+                    <i class="iconfont icon-jishiqi"></i>
+                    <span>{{ item.timeFormat}}</span>
+                  </span>
+                  <span>
+                    <i class="iconfont icon-xiaolaba"></i>
+                    <span>{{ item.type}}</span>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
+          <div class="content fz-16 a-cl">
+            {{ item.comment}}
+          </div>
         </div>
-        <div class="content fz-16 a-cl">
-          {{ item.comment}}
-        </div>
+        <!-- <mt-spinner type="snake" class="spiner" v-show="isFinished"></mt-spinner> -->
+        <p class="fz-14 mb" v-show="isFinished">没有更多评论</p>
       </div>
     </div>
-
     <div class="add">
       <input type="text" placeholder="评论内容" v-model="content" class="i-text">
       <input type="submit" value="评论" class="i-submit cl-w" @click="addComment">
@@ -61,12 +64,15 @@
 
 <script>
 import { mapState } from "vuex";
+import {Toast} from 'mint-ui'
 export default {
   data() {
     return {
       commentData: "",
       content: "",
-      newData:[]
+      newData: [],
+      isFinished: true,
+      busy: true
     };
   },
   methods: {
@@ -74,21 +80,27 @@ export default {
       //通过遍历数组找到对应id的数据
       let id = this.$route.params.forumId;
       //   console.log("细节", id);
-      console.log('enen ',this.commentList);
+      console.log("enen ", this.commentList);
       this.commentList.forEach(item => {
         if (item.forumId == id) {
           console.log("haoaho");
           this.commentData = item;
-          console.log('commentdata: ',this.commentData);
+          console.log("commentdata: ", this.commentData);
         }
       });
     },
-    getCommentList() {
+    loadMore() {
       let id = this.$route.params.forumId;
       this.$axios
         .get(`/hhdj/forum/forumCommentList.do?page=1&rows=10&forum_id=${id}`)
         .then(res => {
-          this.newData = res.rows
+          if (res.rows.length) {
+            this.pn += 1;
+            this.newData = this.newData.concat(res.rows);
+          } else {
+            this.busy = true;
+            this.isFinished = false;
+          }
         });
     },
     addComment() {
@@ -99,7 +111,10 @@ export default {
       this.$axios.post("/hhdj/forum/addComment.do", form).then(res => {
         if (res.code == 1) {
           // this.getCommentList()
-          this.getCommentList=[res.data,...this.getCommentList]
+          this.loadMore = [res.data, ...this.loadMore];
+        }
+        else{
+          Toast('评论内容不能为空')
         }
       });
     }
@@ -108,7 +123,7 @@ export default {
     ...mapState(["commentList"])
   },
   created() {
-    this.getCommentList();
+    this.loadMore();
     this.getData();
   }
 };
@@ -139,7 +154,8 @@ export default {
     outline: none;
     border: 1px solid transparent;
     border-radius: 4px;
-    height: 30px;
+    height: 32px;
+    display: block;
     text-shadow: 1px 1px 1px #fff;
   }
 }
@@ -147,6 +163,7 @@ export default {
   min-height: 100vh;
   padding-top: 15px;
   background-color: #eee;
+  margin-bottom: 35px;
 }
 .forum-list {
   display: flex;
@@ -173,6 +190,12 @@ export default {
       margin: 6px 6px 0 0px;
     }
   }
+}
+.username {
+  margin-bottom: 4px;
+}
+.user-time {
+  margin-left: 10px;
 }
 .content {
   margin-top: 10px;

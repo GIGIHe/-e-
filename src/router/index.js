@@ -267,18 +267,17 @@ const router = new Router({
       name: "findpart",
       meta: {
         title: "流动党员找组织",
-        type: 7
       },
       component: components.FindPart
     },
-    {
-      path: "/uploading",
-      name: "uploading",
-      meta: {
-        title: "上传图片"
-      },
-      component: components.uploading
-    }
+    // {
+    //   path: "/uploading",
+    //   name: "uploading",
+    //   meta: {
+    //     title: "上传图片"
+    //   },
+    //   component: components.uploading
+    // }
   ]
 });
 router.beforeEach((to, from, next) => {

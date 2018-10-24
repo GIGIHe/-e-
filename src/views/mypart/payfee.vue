@@ -33,6 +33,7 @@ export default {
   },
   methods: {
     wechat() {
+      //微信显示的时候同时控制支付宝不显示
       this.weshow = true;
       this.alishow = false;
       this.popupVisible = !this.popupVisible;

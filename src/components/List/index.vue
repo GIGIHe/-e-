@@ -43,7 +43,8 @@ export default {
       name: "",
       isShow: false,
       total: 1,
-      pn: 1
+      pn: 1,
+      busy:false
     };
   },
   methods: {
@@ -58,7 +59,7 @@ export default {
             if (res.rows.length) {
               this.pn += 1;
               this.listData = this.listData.concat(res.rows);
-              this.busy = true;
+            //  this.busy = true;
             } else {
               this.busy = true;
               this.isShow = false;
@@ -66,13 +67,6 @@ export default {
           }
         });
     }
-    // loading() {
-    //   if (this.total == this.listData.length) {
-    //     return (this.isShow = false);
-    //   } else {
-    //     return (this.isShow = true);
-    //   }
-    // }
   },
   watch: {
     data(val) {

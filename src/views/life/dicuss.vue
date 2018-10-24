@@ -8,7 +8,7 @@
         <div class="select">
           <!-- 绑定当前分支的id -->
             <select class="select-item cl-w" v-model="branchData.id">
-              <option value="0" selected = "selected" class="current">请选择分支</option>
+              <option value="0" selected="selected" class="current">请选择分支</option>
                 <option :value="item.id" v-for="(item) in branchData" :key="item.id" class="option-item">{{item.branch}}</option>
             </select>
             <div class="next fz-16 cl-w" @click="handleNext()">下一步</div>
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import {Toast} from 'mint-ui'
 export default {
   data() {
     return {
@@ -45,9 +46,14 @@ export default {
       // 获取当前分支的id
       let id = this.branchData.id;
         console.log('branch-id ',this.branchData.id);
-        //跳到对应的id
+        if(id && id!=0){
+ //跳到对应的id
         this.$router.push(`/partyNumber/${id}`)
         // this.$router.push({path:'/partyNumber',query:{select_branch:id}})
+        }else{
+          Toast('请选择一个分支')
+        }
+       
 
     }
   },

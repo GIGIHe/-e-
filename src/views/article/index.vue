@@ -1,4 +1,5 @@
 <template>
+<!-- 父组件 -->
   <div>
     <News :data = "artcicleData"></News>
   </div>

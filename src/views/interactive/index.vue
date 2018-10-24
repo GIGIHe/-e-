@@ -1,46 +1,49 @@
 <template>
   <div>
     <Header></Header>
-    <div class="forum-wrap mt">
-      <div class="forum-list" v-for="(item,index) in forumData" :key="index">
-        <div class="details">
-          <div class="userMsg fz-16">
-            <img :src="item.header" alt="">
-            <div class="user-time a-cl">
-              <div class="username fz-18">{{item.username}}</div>
-              <div class="time fz-12">
-                <span>
-                  <i class="iconfont icon-jishiqi"></i>
-                  <span>{{item.currentTime}}</span>
-                </span>
-                <span>
-                  <i class="iconfont icon-xiaolaba"></i>
-                  <span>{{item.type}}</span>
-                </span>
+    <div class="forum-wrap mt" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="5">
+      <mt-loadmore>
+        <div class="forum-list" v-for="(item,index) in forumData" :key="index">
+          <div class="details">
+            <div class="userMsg fz-16">
+              <img :src="item.header" alt="">
+              <div class="user-time a-cl">
+                <div class="username fz-18">{{item.username}}</div>
+                <div class="time fz-12">
+                  <span>
+                    <i class="iconfont icon-jishiqi"></i>
+                    <span>{{item.currentTime}}</span>
+                  </span>
+                  <span>
+                    <i class="iconfont icon-xiaolaba"></i>
+                    <span>{{item.type}}</span>
+                  </span>
+                </div>
               </div>
             </div>
+            <div class="btn-wrap fz-12">
+              党员互动
+            </div>
           </div>
-          <div class="btn-wrap fz-12">
-            党员互动
+          <div class="content fz-16 a-cl">
+            {{item.content}}
           </div>
+          <div class="reply fz-14" @click="hanldeReply(item.forumId)">
+            <i class="iconfont icon-huifusixinpinglunxiaoxiliaotianxianxingmianxing f-cl"></i>
+            回复:{{item.commentCount}}</div>
         </div>
-        <div class="content fz-16 a-cl">
-          {{item.content}}
-        </div>
-        <div class="reply fz-14" @click="hanldeReply(item.forumId)">
-          <i class="iconfont icon-huifusixinpinglunxiaoxiliaotianxianxingmianxing f-cl"></i>
-          回复:{{item.commentCount}}</div>
-      </div>
+      </mt-loadmore>
     </div>
     <i class="iconfont icon-jiahao addComment cl-w" @click="addComment"></i>
     <div class="comment" v-show="isShow">
       <div class="top"></div>
-      <form @submit.prevent  class="form-area">
+      <form @submit.prevent class="form-area">
         <textarea name="" id="" cols="30" rows="10" class="text" v-model="content"></textarea>
         <input type="submit" value="发布" class="s-btn cl-w" @click="handleAdd">
         <input type="button" value="取消" @click="handleCancel" class="c-btn">
       </form>
     </div>
+    <p v-if="isFinished" class="fz-16 btext">没有更多数据</p>
   </div>
 </template>
 
@@ -52,26 +55,38 @@ export default {
     return {
       forumData: [],
       content: "",
-      isShow: false
+      isShow: false,
+      pn:1,
+      busy:false,
+      isFinished:true
     };
   },
   components: {
     Header
   },
   methods: {
-    getData() {
+    loadMore() {
       this.$axios
-        .get("/hhdj/forum/forumList.do?page=1&rows=10&type=0&cates=0")
+        .get(`/hhdj/forum/forumList.do?page=${this.pn}&rows=10&type=0&cates=0`)
         .then(res => {
           if (res.code == 1) {
-            this.forumData = res.rows;
-            this.$store.commit('CHANGE_COMMENT',res.rows)
+            // this.forumData = res.rows;
+             if (res.rows.length) {
+              this.pn += 1;
+              this.forumData = this.forumData.concat(res.rows);
+               this.$store.commit("CHANGE_COMMENT", res.rows);
+            //  this.busy = true;
+            } else {
+              this.busy = true;
+              this.isFinished=false
+            }
           }
         })
         .catch(err => {
           console.log(err);
         });
     },
+   
     addComment() {
       this.isShow = true;
     },
@@ -83,7 +98,7 @@ export default {
         if (res.code == 1) {
           console.log(res.msg);
           this.isShow = false;
-          this.getData()
+          this.loadMore();
         } else {
           Toast("帖子内容不能为空");
         }
@@ -92,14 +107,14 @@ export default {
     handleCancel() {
       this.isShow = false;
     },
-    hanldeReply(id){
+    hanldeReply(id) {
       console.log(id);
-     this.$router.push({name: 'detail', params: {forumId:id}})
+      this.$router.push({ name: "detail", params: { forumId: id } });
       //  this.$router.push({ name: 'detail', params:{forumId:id}})
     }
   },
   created() {
-    this.getData();
+    this.loadMore();
   }
 };
 </script>
@@ -183,7 +198,7 @@ export default {
   bottom: 0;
   display: flex;
   flex-direction: column;
-  animation: run .5s 0s 1;
+  animation: run 0.5s 0s 1;
   @keyframes run {
     from {
       width: 0;
@@ -219,5 +234,9 @@ export default {
       margin-left: 4px;
     }
   }
+}
+.btext{
+text-align: center;
+padding:10px 0;
 }
 </style>

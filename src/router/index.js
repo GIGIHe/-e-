@@ -23,7 +23,10 @@ const components = {
   Userinfo: () => import("@/views/mypart/userinfo"),
   Score: () => import("@/views/mypart/score"),
   FindPart: () => import("@/views/findPart/index"),
-  Newtoday: () => import("@/views/newtoday/index")
+  Newtoday: () => import("@/views/newtoday/index"),
+  demo: () => import("@/views/demo/input"),
+  betterscroll: () => import("@/views/demo/better-scroll"),
+  select: () => import("@/views/demo/select")
   // Anytimestudy: () => import("@/views/anytimestudy/index")
 };
 Vue.use(Router);
@@ -266,18 +269,34 @@ const router = new Router({
       path: "/findpart",
       name: "findpart",
       meta: {
-        title: "流动党员找组织",
+        title: "流动党员找组织"
       },
       component: components.FindPart
     },
-    // {
-    //   path: "/uploading",
-    //   name: "uploading",
-    //   meta: {
-    //     title: "上传图片"
-    //   },
-    //   component: components.uploading
-    // }
+    {
+      path: "/demo",
+      name: "demo",
+      meta: {
+        title: "demo"
+      },
+      component: components.demo
+    },
+    {
+      path: "/demo/bs",
+      name: "better-scroll",
+      meta: {
+        title: "better-scroll"
+      },
+      component: components.betterscroll
+    },
+    {
+      path: "/demo/select",
+      name: "select",
+      meta: {
+        title: "select"
+      },
+      component: components.select
+    }
   ]
 });
 router.beforeEach((to, from, next) => {

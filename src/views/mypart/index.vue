@@ -3,10 +3,10 @@
     <Header></Header>
     <div class="userinfo-top mt">
       <!-- userInfo是一个对象即使为空也不为假 -->
-      <img src="../../../public/mypartImg/头像@2x.png" alt="" v-if="!this.$store.state.userInfo.header">
-      <img :src="this.$store.state.userInfo.header" alt="" v-else>
+      <img src="../../../public/mypartImg/头像@2x.png" alt="" v-if="!this.$store.state.token">
+      <img :src="this.$store.state.token" alt="" v-else>
       <!-- <img :src="userInfo ? '../../../public/mypartImg/头像@2x.png' : 'userInfo.header'" > -->
-      <router-link to="/login" class="a-cl" v-if="!this.$store.state.userInfo.branchId">你还没有登录，请登录</router-link>
+      <router-link to="/login" class="a-cl" v-if="!this.$store.state.token">你还没有登录，请登录</router-link>
       <p v-else class="cl-w">{{$store.state.userInfo.username}}</p>
     </div>
     <div class="userinfo-list">

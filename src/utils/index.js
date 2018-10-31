@@ -7,9 +7,6 @@ let baseURL = env == "development" ? "/api" : "";
 //                  static instance = axios.create({
 //                    baseURL,
 //                    timeout: 15000,
-//                    headers: {
-//                      'Content-Type': 'multipart/form-data'
-//                    }
 //                  });
 
 //                  static get(url, data, config) {
